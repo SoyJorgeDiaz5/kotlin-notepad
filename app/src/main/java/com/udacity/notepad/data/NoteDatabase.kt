@@ -14,6 +14,7 @@ import com.udacity.notepad.data.NotesContract.NoteTable.IS_PINNED
 import com.udacity.notepad.data.NotesContract.NoteTable.TEXT
 import com.udacity.notepad.data.NotesContract.NoteTable.UPDATED_AT
 import com.udacity.notepad.data.NotesContract.NoteTable._TABLE_NAME
+import org.jetbrains.anko.db.transaction
 
 class NoteDatabase(context: Context) {
 
@@ -47,14 +48,10 @@ class NoteDatabase(context: Context) {
     fun insert(vararg notes: Note) {
         val values = fromNotes(notes)
         val db = helper.writableDatabase
-        db.beginTransaction()
-        try {
+        db.transaction {
             for (value in values) {
-                db.insert(_TABLE_NAME, null, value)
+                insert(_TABLE_NAME, null, value)
             }
-            db.setTransactionSuccessful()
-        } finally {
-            db.endTransaction()
         }
     }
 
