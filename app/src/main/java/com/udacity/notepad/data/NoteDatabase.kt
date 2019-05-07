@@ -34,13 +34,14 @@ class NoteDatabase(context: Context) {
         val questionMarks = ids.map { "?" }.joinToString { ", " }
         val args = ids.map { it.toString() }
         val selection = "$_ID IN ($questionMarks)"
-        val cursor = helper.readableDatabase.query(_TABLE_NAME, null,
+        val cursor = helper.readableDatabase.query(_TABLE_NAME,
+                null,
                 selection,
-                args, null, null,
+                args.toTypedArray(),
+                null,
+                null,
                 CREATED_AT)
-        val retval = allFromCursor(cursor)
-        cursor.close()
-        return retval
+        return cursor.use(this::allFromCursor)
     }
 
     fun insert(vararg notes: Note) {
