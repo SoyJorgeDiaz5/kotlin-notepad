@@ -71,12 +71,13 @@ class NoteDatabase(context: Context) {
 
     private fun fromCursor(cursor: Cursor): Note {
         var col = 0
-        val note = Note()
-        note.id = cursor.getInt(col++)
-        note.text = cursor.getString(col++)
-        note.isPinned = cursor.getInt(col++) != 0
-        note.createdAt = Date(cursor.getLong(col++))
-        note.updatedAt = Date(cursor.getLong(col))
+        val note = Note().apply {
+            id = cursor.getInt(col++)
+            text = cursor.getString(col++)
+            isPinned = cursor.getInt(col++) != 0
+            createdAt = Date(cursor.getLong(col++))
+            updatedAt = Date(cursor.getLong(col))
+        }
         return note
     }
 
