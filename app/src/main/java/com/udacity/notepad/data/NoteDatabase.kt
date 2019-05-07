@@ -3,7 +3,6 @@ package com.udacity.notepad.data
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 
 import java.util.ArrayList
 import java.util.Date
@@ -90,16 +89,16 @@ class NoteDatabase(context: Context) {
     }
 
     private fun fromNote(note: Note): ContentValues {
-        val values = ContentValues()
-        val id = note.id
-        if (id != -1) {
-            values.put(_ID, id)
+        return ContentValues().apply {
+            val noteId = note.id
+            if (noteId != -1) {
+                put(_ID, noteId)
+            }
+            put(TEXT, note.text)
+            put(IS_PINNED, note.isPinned)
+            put(CREATED_AT, note.createdAt.time)
+            put(UPDATED_AT, note.updatedAt!!.time)
         }
-        values.put(TEXT, note.text)
-        values.put(IS_PINNED, note.isPinned)
-        values.put(CREATED_AT, note.createdAt.time)
-        values.put(UPDATED_AT, note.updatedAt!!.time)
-        return values
     }
 
     private fun fromNotes(notes: Array<out Note>): List<ContentValues> {
