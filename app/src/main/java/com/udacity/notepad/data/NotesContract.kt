@@ -1,7 +1,5 @@
 package com.udacity.notepad.data
 
-import android.provider.BaseColumns
-
 import com.udacity.notepad.data.NotesContract.NoteTable.CREATED_AT
 import com.udacity.notepad.data.NotesContract.NoteTable.IS_PINNED
 import com.udacity.notepad.data.NotesContract.NoteTable.TEXT
